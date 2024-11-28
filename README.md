@@ -7,3 +7,10 @@ STEPS TO START THE APPLICATION:
 3. If database is not present then execute command `npx sequelize-cli db:create`
 4. To create users table run command `npx sequelize-cli db:migrate` 
 5. Run `node start` to start the application
+
+Use below CURL request to upload file.
+
+```bash
+curl --location 'http://localhost:3000/upload' \
+--form 'file=@"/path/to/file"'
+```
