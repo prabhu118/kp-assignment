@@ -20,13 +20,15 @@ const manageUser = async (req, res) => {
             return res.status(400).json({ message: response.message });
         }
 
-        console.log(response);
-
         await UserService.saveRecords(response.data);
 
-        return res.json({ response })
+        let distribution = await UserService.getDistribution();
+
+        console.table(distribution, ['age_group', 'distribution'])
+
+        return res.json({ message: 'Records uploaded successfully' })
     } catch (err) {
-        console.log(err);
+        return res.status(500).json({ message: 'Something went wrong' });
     }
 }
 
@@ -37,8 +39,10 @@ const parseData = (data) => {
 
     if (!MANDATORY_HEADERS.every(k => headers.includes(k))) return { data: [], message: 'Mandatory headers are missing.' };
 
+    if (rows.length === 0) return { data: [], message: 'File is empty. Please upload a valid file.' }
+
     let processedData = rows.map(row => {
-        const obj = { additional_info: {} };
+        const obj = {};
         row.forEach((field, index) => {
             obj[headers[index]] = field;
         });
