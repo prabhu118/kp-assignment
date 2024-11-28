@@ -32,7 +32,7 @@ User.init({
         defaultValue: null
     }
 }, {
-    sequelizeCon,
+    sequelize: sequelizeCon,
     modelName: 'users',
     timestamps: false
 });
